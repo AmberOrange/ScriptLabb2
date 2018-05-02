@@ -138,7 +138,7 @@ namespace rule {
 		if (!TERM('{', text, &child[0])) return false;
 		if (!FIELDRULE(text, &child[1])) return false;
 		if (!TERM('}', text, &child[2])) return false;
-		*result = new Tree("TABLE", backup, *text - backup);
+		*result = new Tree("TABLE", backup, (int)(*text - backup));
 		(*result)->children.push_back(child[0]);
 		(*result)->children.push_back(child[1]);
 		(*result)->children.push_back(child[2]);
@@ -151,7 +151,7 @@ namespace rule {
 		const char *backup = *text;
 		if (FIELD(text, &child[0]) && FIELDRULE2(text, &child[1]))
 		{
-			*result = new Tree("FIELDRULE", backup, *text - backup);
+			*result = new Tree("FIELDRULE", backup, (int)(*text - backup));
 			(*result)->children.push_back(child[0]);
 			(*result)->children.push_back(child[1]);
 		}
@@ -166,7 +166,7 @@ namespace rule {
 		const char *backup = *text;
 		if (DELIM(text, &child[0]) && FIELDRULE(text, &child[1]))
 		{
-			*result = new Tree("FIELDRULE2", backup, *text - backup);
+			*result = new Tree("FIELDRULE2", backup, (int)(*text - backup));
 			(*result)->children.push_back(child[0]);
 			(*result)->children.push_back(child[1]);
 		} else
@@ -180,7 +180,7 @@ namespace rule {
 		const char *backup = *text;
 		if (ASSIGN(text, &child) || VALUE(text, &child))
 		{
-			*result = new Tree("FIELD", backup, *text - backup);
+			*result = new Tree("FIELD", backup, (int)(*text - backup));
 			(*result)->children.push_back(child);
 			return true;
 		}
@@ -197,7 +197,7 @@ namespace rule {
 			|| STR(text, &child)
 			|| TABLE(text, &child))
 		{
-			*result = new Tree("VALUE", backup, *text - backup);
+			*result = new Tree("VALUE", backup, (int)(*text - backup));
 			(*result)->children.push_back(child);
 			return true;
 		}
@@ -211,7 +211,7 @@ namespace rule {
 		if (!ASSIGNKEY(text, &child[0])) return false;
 		if (!TERM('=', text, &child[1])) return false;
 		if (!VALUE(text, &child[2])) return false;
-		*result = new Tree("ASSIGN", backup, *text - backup);
+		*result = new Tree("ASSIGN", backup, (int)(*text - backup));
 		(*result)->children.push_back(child[0]);
 		(*result)->children.push_back(child[1]);
 		(*result)->children.push_back(child[2]);
@@ -224,7 +224,7 @@ namespace rule {
 		Tree *child1 = nullptr;
 		if (VAR(text, &child1))
 		{
-			*result = new Tree("ASSIGNKEY", backup, *text - backup);
+			*result = new Tree("ASSIGNKEY", backup, (int)(*text - backup));
 			(*result)->children.push_back(child1);
 			return true;
 		}
@@ -233,7 +233,7 @@ namespace rule {
 			if (!(TERM('[', text, &child[0]))) return false;
 			if (!KEY(text, &child[1])) return false;
 			if (!TERM(']', text, &child[2])) return false;
-			*result = new Tree("ASSIGNKEY", backup, *text - backup);
+			*result = new Tree("ASSIGNKEY", backup, (int)(*text - backup));
 			(*result)->children.push_back(child[0]);
 			(*result)->children.push_back(child[1]);
 			(*result)->children.push_back(child[2]);
@@ -247,7 +247,7 @@ namespace rule {
 		const char *backup = *text;
 		if (NUM(text, &child) || STR(text, &child))
 		{
-			*result = new Tree("KEY", backup, *text - backup);
+			*result = new Tree("KEY", backup, (int)(*text - backup));
 			(*result)->children.push_back(child);
 			return true;
 		}
